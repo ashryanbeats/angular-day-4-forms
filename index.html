@@ -15,6 +15,7 @@
         <script src="js/directives/flash-card/flash-card.js"></script>
         <script src="js/directives/border-on-hover.js"></script>
         <script src="js/filters/cheat-filter.js"></script>
+        <script src="js/controllers/newCardController/newCardController.js"></script>
     </head>
 
     <body ng-app="FlashCards">
@@ -46,6 +47,32 @@
                 <flash-card card="entry" ng-repeat="entry in flashCards"></flash-card>
 
             </div>
+
+        </div>
+
+        <div ng-controller="NewCardController">
+            <pre>{{ newCard | json }}</pre>
+
+            <input ng-model='newCard.question' type="text">
+
+
+            <select ng-model='newCard.category'>
+                <option>Node</option>
+                <option>Angular</option>
+                <option>MongoDb</option>
+                <option>Express</option>
+            </select>
+
+            <input ng-model='newCard.answers[0].text' type="text">
+            <input type="checkbox" ng-model='newCard.answers[0].correct'>
+            
+            <input ng-model='newCard.answers[1].text' type="text">
+            <input type="checkbox" ng-model='newCard.answers[1].correct'>
+            
+            <input ng-model='newCard.answers[2].text' type="text">
+            <input type="checkbox" ng-model='newCard.answers[2].correct'>
+            
+            <button ng-click="sendItUp(newCard)">Whatever</button>
 
         </div>
 
