@@ -3,6 +3,10 @@ var express = require('express');
 var app = express();
 module.exports = app;
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 var publicPath = path.join(__dirname, '../public');
 var indexHtmlPath = path.join(__dirname, '../index.html');
 
@@ -12,6 +16,14 @@ app.use(express.static(publicPath));
 
 app.get('/', function (req, res) {
     res.sendFile(indexHtmlPath);
+});
+
+app.post('/cards', function(req, res, next) {
+
+	FlashCardModel.create(req.body, function(err, card) {
+		if (err) return next(err);
+		res.send(card);
+	});
 });
 
 
