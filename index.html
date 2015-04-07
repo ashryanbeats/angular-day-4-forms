@@ -51,28 +51,42 @@
         </div>
 
         <div ng-controller="NewCardController">
-            <pre>{{ newCard | json }}</pre>
 
-            <input ng-model='newCard.question' type="text">
-
-
-            <select ng-model='newCard.category'>
-                <option>Node</option>
-                <option>Angular</option>
-                <option>MongoDb</option>
-                <option>Express</option>
-            </select>
-
-            <input ng-model='newCard.answers[0].text' type="text">
-            <input type="checkbox" ng-model='newCard.answers[0].correct'>
+            <form name="newCardForm" ng-submit="newCardForm.$valid && sendItUp(newCard)">
             
-            <input ng-model='newCard.answers[1].text' type="text">
-            <input type="checkbox" ng-model='newCard.answers[1].correct'>
-            
-            <input ng-model='newCard.answers[2].text' type="text">
-            <input type="checkbox" ng-model='newCard.answers[2].correct'>
-            
-            <button ng-click="sendItUp(newCard)">Whatever</button>
+                <pre> {{newCardForm.$pristine | json }} </pre>
+
+                <!-- <pre>{{ newCard | json }}</pre> -->
+                <label>Question: </label>
+                <error ng-show="newCardForm.question.$touched && newCardForm.question.$error.required">Question is a required field</error>
+                <error ng-show="newCardForm.question.$touched && newCardForm.question.$error.minlength">Question is too short</error>
+                <input name="question" required ng-minlength="15" ng-model='newCard.question' type="text">
+
+                <label>Category: </label>
+                <select name="category" required ng-model='newCard.category'>
+                    <option>Node</option>
+                    <option>Angular</option>
+                    <option>MongoDb</option>
+                    <option>Express</option>
+                </select>
+                <error ng-show="newCardForm.category.$touched && newCardForm.category.$error.required">Category is a required field</error>
+
+                <label>Answers: </label>
+                <input name="answer0" ng-maxlength="40" ng-model='newCard.answers[0].text' type="text">
+                <input type="checkbox" ng-model='newCard.answers[0].correct'>
+                <error ng-show="newCardForm.answer0.$error.maxlength">Answer is too long</error>
+                
+                <input name="answer1" ng-maxlength="40" ng-model='newCard.answers[1].text' type="text">
+                <input type="checkbox" ng-model='newCard.answers[1].correct'>
+                <error ng-show="newCardForm.answer1.$error.maxlength">Answer is too long</error>
+
+                <input name="answer2" ng-maxlength="40" ng-model='newCard.answers[2].text' type="text">
+                <input type="checkbox" ng-model='newCard.answers[2].correct'>
+                <error ng-show="newCardForm.answer2.$error.maxlength">Answer is too long</error>
+
+                <button>Whatever</button>
+
+            </form>
 
         </div>
 
